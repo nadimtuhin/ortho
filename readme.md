@@ -6,6 +6,7 @@ Intended features:
 3. list words by A,B,C,...Z
 4. word games
 5. add pictures to words
+6. comment the codebase
 
 Contribute:
 help me to make this app awesome. send me pull requests
