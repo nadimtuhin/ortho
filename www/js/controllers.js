@@ -26,7 +26,7 @@ angular.module('ortho.controllers', [])
 .controller('WordsCtrl',
     ["$scope", "$log", "Words",  "$stateParams", "$state", function($scope, $log, Words, $stateParams, $state) {
         $scope.page =  $stateParams.page;
-        $scope.perPage = 20;
+        $scope.perPage = 10;
 
         $scope.paginate = function(page){
             $state.go('tab.words', {page: $scope.page });
