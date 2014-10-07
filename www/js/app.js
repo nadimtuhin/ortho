@@ -23,6 +23,7 @@ angular.module('ortho', ['ionic', 'ortho.controllers', 'ortho.services'])
 
 .config(["$stateProvider", "$urlRouterProvider", "$compileProvider", function($stateProvider, $urlRouterProvider, $compileProvider) {
 
+  //fixes issues with ffos
   $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|app):/);
 
   // Ionic uses AngularUI Router which uses the concept of states
@@ -78,11 +79,11 @@ angular.module('ortho', ['ionic', 'ortho.controllers', 'ortho.services'])
       }
     })
 
-    .state('tab.account', {
-      url: '/account',
+    .state('tab.setting', {
+      url: '/setting',
       views: {
-        'tab-account': {
-          templateUrl: 'templates/tab-account.html',
+        'tab-setting': {
+          templateUrl: 'templates/tab-setting.html',
           controller: 'AccountCtrl'
         }
       }
