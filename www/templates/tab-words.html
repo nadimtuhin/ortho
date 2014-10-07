@@ -1,0 +1,15 @@
+<ion-view title="Words" id="word-list">
+  <ion-content>
+
+    <div class="button-bar">
+      <a class="button button-positive" ng-click="prev()">Prev</a>
+      <a class="button button-positive" ng-click="next()">Next</a>
+    </div>
+
+    <ion-list>
+      <ion-item ng-repeat="word in words" type="item-text-wrap" href="#/tab/word/{{word.id}}">
+        {{word.name}}
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

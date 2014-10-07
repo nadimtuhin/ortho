@@ -1,0 +1,6 @@
+/* Empty. Add your own CSS if you like */
+
+/*dashboard input looks little awkward to increasing height*/
+.bar.item-input-inset .item-input-wrapper input {
+    height: 35px;
+}
