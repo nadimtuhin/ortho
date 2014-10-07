@@ -6,12 +6,33 @@ var sass = require('gulp-sass');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var sh = require('shelljs');
+var mainBowerFiles = require('main-bower-files');
+
+gulp.task('bower', function() {
+    return gulp.src(mainBowerFiles({paths:{bowerDirectory: './www/lib'}}))
+        .pipe(concat('vendors.js'))
+        .pipe(gulp.dest('./www/js'));
+});
+
+gulp.task('js', function() {
+    return gulp.src([
+          // './www/js/data/db.js',
+          './www/js/functions.js',
+          './www/js/app.js',
+          './www/js/services/*.js',
+          './www/js/controllers/*.js',
+          './www/js/routes.js',
+        ])
+        .pipe(concat('script.js'))
+        .pipe(gulp.dest('./www/build'));
+});
 
 var paths = {
-  sass: ['./scss/**/*.scss']
+  sass: ['./scss/**/*.scss'],
+  js: ['./www/js/**/*.js']
 };
 
-gulp.task('default', ['sass']);
+gulp.task('default', ['sass', 'js']);
 
 gulp.task('sass', function(done) {
   gulp.src('./scss/ionic.app.scss')
@@ -27,6 +48,7 @@ gulp.task('sass', function(done) {
 
 gulp.task('watch', function() {
   gulp.watch(paths.sass, ['sass']);
+  gulp.watch(paths.js, ['js']);
 });
 
 gulp.task('install', ['git-check'], function() {
