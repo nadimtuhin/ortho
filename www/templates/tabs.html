@@ -3,21 +3,26 @@
   Each tab's child <ion-nav-view> directive will have its own
   navigation history that also transitions its views in and out.
 -->
-<ion-tabs class="tabs-icon-top">
+<ion-tabs  class="tabs-positive tabs-icon-only">
 
   <!-- Dashboard Tab -->
-  <ion-tab title="Dashboard" icon="icon ion-home" href="#/tab/dash">
+  <ion-tab title="Dashboard" icon-on="icon ion-ios7-home" icon-off="icon ion-ios7-home-outline" href="#/tab/dash">
     <ion-nav-view name="tab-dash"></ion-nav-view>
   </ion-tab>
 
   <!-- Alphabets Tab -->
-  <ion-tab title="Alphabets" icon="icon ion-heart" href="#/tab/alphabets">
+  <ion-tab title="Alphabets" icon-on="icon ion-ios7-browsers" icon-off="icon ion-ios7-browsers-outline" href="#/tab/alphabets">
     <ion-nav-view name="tab-alphabets"></ion-nav-view>
   </ion-tab>
 
+  <!-- Words Tab -->
+  <ion-tab title="Words" class="tabs-item-hide" icon="icon ion-heart" href="#/tab/alphabet/A/1">
+    <ion-nav-view name="tab-words"></ion-nav-view>
+  </ion-tab>
+
   <!-- Settings Tab -->
-  <ion-tab title="Settings" icon="icon ion-gear-b" href="#/tab/setting">
-    <ion-nav-view name="tab-setting"></ion-nav-view>
+  <ion-tab title="Settings" icon-on="icon ion-ios7-gear" icon-off="icon ion-ios7-gear-outline" href="#/tab/setting">
+    <ion-nav-view name="tab-settings"></ion-nav-view>
   </ion-tab>
 
 

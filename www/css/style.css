@@ -4,6 +4,9 @@
 .bar.item-input-inset .item-input-wrapper input {
     height: 35px;
 }
+.tabs-item-hide{
+	display: none;
+}
 
 .alphabet{
     width: 18%;

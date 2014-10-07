@@ -11,10 +11,9 @@ angular.module('ortho')
         $scope.totalPages   = Math.ceil(alphabetWords.length / $scope.perPage);
 
 
-        $log.info('we are in page ' + $scope.page);
-        $log.info('total words ' + alphabetWords.length);
-        $log.info('total pages ' + $scope.totalPages);
-
+        // $log.info('we are in page ' + $scope.page);
+        // $log.info('total words ' + alphabetWords.length);
+        // $log.info('total pages ' + $scope.totalPages);
 
 
         $scope.paginate = function(page){

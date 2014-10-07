@@ -67,10 +67,9 @@ angular.module('ortho')
         $scope.totalPages   = Math.ceil(alphabetWords.length / $scope.perPage);
 
 
-        $log.info('we are in page ' + $scope.page);
-        $log.info('total words ' + alphabetWords.length);
-        $log.info('total pages ' + $scope.totalPages);
-
+        // $log.info('we are in page ' + $scope.page);
+        // $log.info('total words ' + alphabetWords.length);
+        // $log.info('total pages ' + $scope.totalPages);
 
 
         $scope.paginate = function(page){
@@ -179,7 +178,7 @@ angular.module('ortho')
 		.state('tab.alphabet-words', {
 			url: '/alphabet/:alphabet/:page',
 			views: {
-				'tab-alphabets': {
+				'tab-words': {
 					templateUrl: 'templates/alphabet/words.html',
 					controller: 'AlphabetWordsCtrl'
 				}
@@ -189,7 +188,7 @@ angular.module('ortho')
 		.state('tab.alphabet-word', {
 			url: '/meaning/:wordId',
 			views: {
-				'tab-alphabets': {
+				'tab-words': {
 					templateUrl: 'templates/word/meaning.html',
 					controller: 'WordMeaningCtrl'
 				}
@@ -197,13 +196,10 @@ angular.module('ortho')
 		})
 
 
-
-
-
 		.state('tab.setting', {
 			url: '/setting',
 			views: {
-				'tab-setting': {
+				'tab-settings': {
 					templateUrl: 'templates/tab-settings.html',
 					controller: 'SettingsCtrl'
 				}

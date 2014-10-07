@@ -59,7 +59,7 @@ angular.module('ortho')
 		.state('tab.alphabet-words', {
 			url: '/alphabet/:alphabet/:page',
 			views: {
-				'tab-alphabets': {
+				'tab-words': {
 					templateUrl: 'templates/alphabet/words.html',
 					controller: 'AlphabetWordsCtrl'
 				}
@@ -69,7 +69,7 @@ angular.module('ortho')
 		.state('tab.alphabet-word', {
 			url: '/meaning/:wordId',
 			views: {
-				'tab-alphabets': {
+				'tab-words': {
 					templateUrl: 'templates/word/meaning.html',
 					controller: 'WordMeaningCtrl'
 				}
@@ -77,13 +77,10 @@ angular.module('ortho')
 		})
 
 
-
-
-
 		.state('tab.setting', {
 			url: '/setting',
 			views: {
-				'tab-setting': {
+				'tab-settings': {
 					templateUrl: 'templates/tab-settings.html',
 					controller: 'SettingsCtrl'
 				}
