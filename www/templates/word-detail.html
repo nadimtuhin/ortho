@@ -8,12 +8,19 @@
   <ion-content has-header="true" padding="true">
 
 <div class="card">
-  <div class="item item-divider">
-    {{ word.sd }}
+  <div class="item item-divider"> Short Definition </div>
+  <div class="item item-text-wrap">
+      <p> {{ word.sd }} </p>
   </div>
+  <div class="item item-divider"> Full Definition </div>
   <div ng-repeat="fd in word.fd" class="item item-text-wrap">
         <p><strong>definition:</strong> {{fd.d}}</p>
         <p ng-show="fd.s"><strong>synonym:</strong> {{fd.s}}</p>
+  </div>
+
+  <div class="item item-divider"> Mnemonics </div>
+  <div ng-repeat="mn in word.mn" class="item item-text-wrap">
+        <p><em style="font-size:8px">{{$index}}:</em> {{mn}}</p>
   </div>
 </div>
 
