@@ -1,12 +1,12 @@
 Ortho: FirefoxOS GRE Dictionary
 
 Intended features:
-1. list of words
-2. search
-3. list words by A,B,C,...Z
-4. word games
-5. add pictures to words
-6. comment the codebase
+- list of words
+- search
+- list words by A,B,C,...Z
+- word games
+- add pictures to words
+- comment the codebase
 
 Contribute:
 help me to make this app awesome. send me pull requests
