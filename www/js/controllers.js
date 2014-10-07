@@ -6,11 +6,11 @@ angular.module('ortho.controllers', [])
 
         $scope.word = Words.getByName(word);
         if (!$scope.word) {
-            $scope.notFound = true;
+            // $scope.notFound = true;
 
-            $timeout(function(){
-                $scope.notFound = false;
-            }, 2000);
+            // $timeout(function(){
+            //     $scope.notFound = false;
+            // }, 2000);
 
             return;
         }
