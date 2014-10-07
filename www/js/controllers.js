@@ -33,12 +33,12 @@ angular.module('ortho.controllers', [])
         };
 
         $scope.prev = function(){
-            $scope.page = --$scope.page === 0 ? --$scope.page : $scope.page;
+            if( --$scope.page === 0 ) $scope.page--;
             $scope.paginate();
         };
 
         $scope.next = function(){
-            $scope.page = ++$scope.page === 0 ? ++$scope.page : $scope.page;
+            if( ++$scope.page === 0 ) $scope.page++;
             $scope.paginate();
         };
 
