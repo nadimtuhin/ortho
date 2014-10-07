@@ -22,5 +22,10 @@ angular.module('ortho')
     get: function(id) {
       return _.findWhere(words, {id: parseInt(id)});
     },
+    alphabetFilter: function(alphabet){
+      return words.filter(function(word){
+        return word.name.indexOf(angular.lowercase(alphabet)) === 0;
+      });
+    }
   };
 });

@@ -47,35 +47,48 @@ angular.module('ortho')
     get: function(id) {
       return _.findWhere(words, {id: parseInt(id)});
     },
+    alphabetFilter: function(alphabet){
+      return words.filter(function(word){
+        return word.name.indexOf(angular.lowercase(alphabet)) === 0;
+      });
+    }
   };
 });
 angular.module('ortho')
-.controller('AlphabetWordsCtrl', ["$scope", "Words", "$stateParams", "$state", function($scope, Words, $stateParams, $state){
-    $scope.alphabet = $stateParams.alphabet;
-    $scope.page =  $stateParams.page;
-    $scope.perPage = 10;
+.controller('AlphabetWordsCtrl', ["$scope", "Words", "$stateParams", "$state", "$log",
+    function($scope, Words, $stateParams, $state, $log){
+        var alphabetWords;
 
-    $scope.thisAlphWords = Words.all().filter(function(word){
-        return word.name.indexOf(angular.lowercase($scope.alphabet)) === 0;
-    });
+        $scope.page     = $stateParams.page;
+        $scope.alphabet = $stateParams.alphabet;
+        $scope.perPage  = 10;
+
+        alphabetWords       = Words.alphabetFilter($scope.alphabet);
+        $scope.totalPages   = Math.ceil(alphabetWords.length / $scope.perPage);
 
 
-    $scope.paginate = function(page){
-        $state.go('tab.alphabet-words', {alphabet: $scope.alphabet, page: $scope.page });
-    };
+        $log.info('we are in page ' + $scope.page);
+        $log.info('total words ' + alphabetWords.length);
+        $log.info('total pages ' + $scope.totalPages);
 
-    $scope.prev = function(){
-        if( --$scope.page === 0 ) $scope.page--;
-        $scope.paginate();
-    };
 
-    $scope.next = function(){
-        if( ++$scope.page === 0 ) $scope.page++;
-        $scope.paginate();
-    };
-    console.log('we are in page '+$scope.page);
 
-    $scope.words = Words.paginate($scope.page, $scope.perPage, $scope.thisAlphWords);
+        $scope.paginate = function(page){
+            $state.go('tab.alphabet-words', {alphabet: $scope.alphabet, page: $scope.page });
+        };
+
+        $scope.prev = function(){
+            if( $scope.page-- <= 1 ) $scope.page = $scope.totalPages;
+            $scope.paginate();
+        };
+
+        $scope.next = function(){
+            if( $scope.page++ >=  $scope.totalPages) $scope.page = 1;
+            $scope.paginate();
+        };
+
+
+        $scope.words = Words.paginate($scope.page, $scope.perPage, alphabetWords);
 }]);
 angular.module('ortho')
 .controller('AlphabetsCtrl', ["$scope", "$state",
