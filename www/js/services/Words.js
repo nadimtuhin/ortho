@@ -1,10 +1,14 @@
 angular.module('ortho')
-.factory('Words', function() {
+.factory('Words', ["$$models",  function($$models) {
+  var  id=0, words;
 
-  // Might use a resource here that returns a JSON array
-  var id=0, words = _.chain(window.words).map(function(meaning, word){
-    return meaning.name = word, meaning.id=id++, meaning;
-  }).toArray().value();
+  $$models.db.then(function(res){
+    //TODO: here we are doing extra work
+    //map the json perfectly so we dont need to do this again
+    words = _.chain(res.data[0]).map(function(meaning, word){
+      return meaning.name = word, meaning.id=id++, meaning;
+    }).toArray().value();
+  });
 
   return {
     all: function() {
@@ -28,4 +32,4 @@ angular.module('ortho')
       });
     }
   };
-});
+}]);
