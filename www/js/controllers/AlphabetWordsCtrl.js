@@ -26,6 +26,10 @@ angular.module('ortho')
             $scope.paginate();
         };
 
+        $scope.random = function(){
+            $scope.words = _.sample(alphabetWords, 10);
+        };
+
         $scope.next = function(){
             if( $scope.page++ >=  $scope.totalPages) $scope.page = 1;
             $scope.paginate();

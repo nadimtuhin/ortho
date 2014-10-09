@@ -25,74 +25,78 @@ angular.module('ortho', ['ionic'])
 }]);
 angular.module('ortho')
 .factory('$$models', ["$http", function($http) {
-  var db = $http.get('js/data/db.json'),
-      top50 = $http.get('js/data/top50.json');
+  var words, top = {};
 
-      // top100 = $http.get('js/data/top100.json'),
-      // top200 = $http.get('js/data/top200.json'),
-      // top300 = $http.get('js/data/top300.json'),
-      // top400 = $http.get('js/data/top400.json'),
-      // top500 = $http.get('js/data/top500.json'),
-      // top600 = $http.get('js/data/top600.json'),
-      // top700 = $http.get('js/data/top700.json'),
-      // top800 = $http.get('js/data/top800.json'),
-      // top900 = $http.get('js/data/top900.json'),
-      // top1000 = $http.get('js/data/top1000.json')
+  top['50'] = $http.get('js/data/top50.json');
+  top['100'] = $http.get('js/data/top100.json');
+  top['200'] = $http.get('js/data/top200.json');
+  top['300'] = $http.get('js/data/top300.json');
+  top['400'] = $http.get('js/data/top400.json');
+  top['500'] = $http.get('js/data/top500.json');
+  // top['600'] = $http.get('js/data/top600.json');
+  // top['700'] = $http.get('js/data/top700.json');
+  // top['800'] = $http.get('js/data/top800.json');
+  // top['900'] = $http.get('js/data/top900.json');
+  // top['1000'] = $http.get('js/data/top1000.json');
 
+  words = $http.get('js/data/db.json');
 
   return {
-    db: db,
-    top50: top50
+    words: words,
+    top: top
   };
 }]);
 angular.module('ortho')
-.factory('Words', ["$$models",  function($$models) {
-  var  id=0, words, top50;
+.factory('Words', ["$$models",	function($$models) {
+	var	id=0, topWords = {};
+	var topSanitizer = function(data){
+		return _.chain(data).map(function(word){
+			return angular.lowercase(word);
+		}).toArray().value();
+	};
 
-  $$models.db.then(function(res){
-    //TODO: here we are doing extra work
-    //map the json perfectly so we dont need to do this again
-    words = _.chain(res.data[0]).map(function(meaning, word){
-      return meaning.name = word, meaning.id=id++, meaning;
-    }).toArray().value();
-  });
+	_([50, 100, 200, 300, 400, 500]).each(function(nn){
+		$$models.top[nn].then(function(res){
+			topWords[nn] = topSanitizer(res.data);
+		});
+	});
 
+	$$models.words.then(function(res){
+		//TODO: here we are doing extra work
+		//map the json perfectly so we dont need to do this again
+		words = _.chain(res.data[0]).map(function(meaning, word){
+			return meaning.name = word, meaning.id=id++, meaning;
+		}).toArray().value();
+	});
 
-  $$models.top50.then(function(res){
-    //TODO: doing extra work here
-    //map the json perfectly so we dont need to do this agian
-    top50 = _.chain(res.data).map(function(word){
-      return angular.lowercase(word);
-    }).toArray().value();
-  });
+	return {
+        topWords: topWords,
+		all: function() {
+			return words;
+		},
+		paginate: function(page, count, words) {
+			var from = (page-1)*count,
+					to = page*count;
 
-  return {
-    all: function() {
-      return words;
-    },
-    paginate: function(page, count, words) {
-      var from = (page-1)*count,
-          to = page*count;
-
-      return words.slice(from, to);
-    },
-    getByName: function(word) {
-      return _.findWhere(words, {name: angular.lowercase(word)});
-    },
-    get: function(id) {
-      return _.findWhere(words, {id: parseInt(id)});
-    },
-    alphabetFilter: function(alphabet){
-      return words.filter(function(word){
-        return word.name.indexOf(angular.lowercase(alphabet)) === 0;
-      });
-    },
-    top50: function(){
-      return words.filter(function(word){
-        return _.contains(top50, word.name);
-      });
-    }
-  };
+			return words.slice(from, to);
+		},
+		getByName: function(word) {
+			return _.findWhere(words, {name: angular.lowercase(word)});
+		},
+		get: function(id) {
+			return _.findWhere(words, {id: parseInt(id)});
+		},
+		alphabetFilter: function(alphabet){
+			return words.filter(function(word){
+				return word.name.indexOf(angular.lowercase(alphabet)) === 0;
+			});
+		},
+		top: function(top){
+			return words.filter(function(word){
+				return _.contains(topWords[top], word.name);
+			});
+		}
+	};
 }]);
 angular.module('ortho')
 .controller('AlphabetWordsCtrl', ["$scope", "Words", "$stateParams", "$state", "$log",
@@ -120,6 +124,10 @@ angular.module('ortho')
         $scope.prev = function(){
             if( $scope.page-- <= 1 ) $scope.page = $scope.totalPages;
             $scope.paginate();
+        };
+
+        $scope.random = function(){
+            $scope.words = _.sample(alphabetWords, 10);
         };
 
         $scope.next = function(){
@@ -159,18 +167,16 @@ angular.module('ortho')
         var topWords;
 
         $scope.page     = $stateParams.page;
-        $scope.top      = $stateParams.top;
+        $scope.top      = parseInt($stateParams.top);
         $scope.perPage  = 10;
         $scope.title 	= "Top "+$stateParams.top;
 
-        topWords            = Words['top'+$scope.top]();
+        topWords            = Words.top($scope.top);
         $scope.totalPages   = Math.ceil(topWords.length / $scope.perPage);
-
 
         $log.info('we are in page ' + $scope.page);
         $log.info('total words ' + topWords.length);
         $log.info('total pages ' + $scope.totalPages);
-        $log.info(topWords);
 
 
         $scope.paginate = function(page){
@@ -180,6 +186,10 @@ angular.module('ortho')
         $scope.prev = function(){
             if( $scope.page-- <= 1 ) $scope.page = $scope.totalPages;
             $scope.paginate();
+        };
+
+        $scope.random = function(){
+            $scope.words = _.sample(topWords, 10);
         };
 
         $scope.next = function(){

@@ -4,18 +4,16 @@ angular.module('ortho')
         var topWords;
 
         $scope.page     = $stateParams.page;
-        $scope.top      = $stateParams.top;
+        $scope.top      = parseInt($stateParams.top);
         $scope.perPage  = 10;
         $scope.title 	= "Top "+$stateParams.top;
 
-        topWords            = Words['top'+$scope.top]();
+        topWords            = Words.top($scope.top);
         $scope.totalPages   = Math.ceil(topWords.length / $scope.perPage);
-
 
         $log.info('we are in page ' + $scope.page);
         $log.info('total words ' + topWords.length);
         $log.info('total pages ' + $scope.totalPages);
-        $log.info(topWords);
 
 
         $scope.paginate = function(page){
@@ -25,6 +23,10 @@ angular.module('ortho')
         $scope.prev = function(){
             if( $scope.page-- <= 1 ) $scope.page = $scope.totalPages;
             $scope.paginate();
+        };
+
+        $scope.random = function(){
+            $scope.words = _.sample(topWords, 10);
         };
 
         $scope.next = function(){
