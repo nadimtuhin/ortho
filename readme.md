@@ -1,12 +1,10 @@
 **Ortho: FirefoxOS/Android/iOS GRE Dictionary**
 
 **Intended features:**
-- list of words
-- search
-- list words by A,B,C,...Z
 - word games
 - add pictures to words
 - comment the codebase
+- flash cards
 
 **Contribute:**
 
