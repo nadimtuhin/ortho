@@ -1,4 +1,4 @@
-**Ortho: FirefoxOS GRE Dictionary**
+**Ortho: FirefoxOS/Android/iOS GRE Dictionary**
 
 **Intended features:**
 - list of words
