@@ -4,6 +4,9 @@
 .bar.item-input-inset .item-input-wrapper input {
     height: 35px;
 }
+.small-button-bar > .button:before, .button-bar > .button .icon:before {
+    line-height: 25px;
+}
 .tabs-item-hide{
 	display: none;
 }

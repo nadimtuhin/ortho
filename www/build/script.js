@@ -26,32 +26,43 @@ angular.module('ortho', ['ionic'])
 angular.module('ortho')
 .factory('$$models', ["$http", function($http) {
   var db = $http.get('js/data/db.json'),
-      top50 = $http.get('js/data/top50.json'),
-      top100 = $http.get('js/data/top100.json'),
-      top200 = $http.get('js/data/top200.json'),
-      top300 = $http.get('js/data/top300.json'),
-      top400 = $http.get('js/data/top400.json'),
-      top500 = $http.get('js/data/top500.json'),
-      top600 = $http.get('js/data/top600.json'),
-      top700 = $http.get('js/data/top700.json'),
-      top800 = $http.get('js/data/top800.json'),
-      top900 = $http.get('js/data/top900.json'),
-      top1000 = $http.get('js/data/top1000.json');
+      top50 = $http.get('js/data/top50.json');
+
+      // top100 = $http.get('js/data/top100.json'),
+      // top200 = $http.get('js/data/top200.json'),
+      // top300 = $http.get('js/data/top300.json'),
+      // top400 = $http.get('js/data/top400.json'),
+      // top500 = $http.get('js/data/top500.json'),
+      // top600 = $http.get('js/data/top600.json'),
+      // top700 = $http.get('js/data/top700.json'),
+      // top800 = $http.get('js/data/top800.json'),
+      // top900 = $http.get('js/data/top900.json'),
+      // top1000 = $http.get('js/data/top1000.json')
 
 
   return {
-    db: db
+    db: db,
+    top50: top50
   };
 }]);
 angular.module('ortho')
 .factory('Words', ["$$models",  function($$models) {
-  var  id=0, words;
+  var  id=0, words, top50;
 
   $$models.db.then(function(res){
     //TODO: here we are doing extra work
     //map the json perfectly so we dont need to do this again
     words = _.chain(res.data[0]).map(function(meaning, word){
       return meaning.name = word, meaning.id=id++, meaning;
+    }).toArray().value();
+  });
+
+
+  $$models.top50.then(function(res){
+    //TODO: doing extra work here
+    //map the json perfectly so we dont need to do this agian
+    top50 = _.chain(res.data).map(function(word){
+      return angular.lowercase(word);
     }).toArray().value();
   });
 
@@ -75,6 +86,11 @@ angular.module('ortho')
       return words.filter(function(word){
         return word.name.indexOf(angular.lowercase(alphabet)) === 0;
       });
+    },
+    top50: function(){
+      return words.filter(function(word){
+        return _.contains(top50, word.name);
+      });
     }
   };
 }]);
@@ -85,6 +101,7 @@ angular.module('ortho')
 
         $scope.page     = $stateParams.page;
         $scope.alphabet = $stateParams.alphabet;
+        $scope.title    = $stateParams.alphabet;
         $scope.perPage  = 10;
 
         alphabetWords       = Words.alphabetFilter($scope.alphabet);
@@ -124,7 +141,7 @@ angular.module('ortho')
     $scope.search = function(word){
         $scope.word = Words.getByName(word);
         if (!$scope.word) {
-            alert('word does not exist in the dictionary');
+            alert('word "'+ word +'" does not exist in the dictionary');
             return;
         }
 
@@ -135,6 +152,42 @@ angular.module('ortho')
 .controller('SettingsCtrl', ["$scope",
     function($scope) {
 
+}]);
+angular.module('ortho')
+.controller('TopListCtrl', ["$scope", "Words", "$stateParams", "$state", "$log",
+    function($scope, Words, $stateParams, $state, $log){
+        var topWords;
+
+        $scope.page     = $stateParams.page;
+        $scope.top      = $stateParams.top;
+        $scope.perPage  = 10;
+        $scope.title 	= "Top "+$stateParams.top;
+
+        topWords            = Words['top'+$scope.top]();
+        $scope.totalPages   = Math.ceil(topWords.length / $scope.perPage);
+
+
+        $log.info('we are in page ' + $scope.page);
+        $log.info('total words ' + topWords.length);
+        $log.info('total pages ' + $scope.totalPages);
+        $log.info(topWords);
+
+
+        $scope.paginate = function(page){
+            $state.go('tab.top', {top: $scope.top, page: $scope.page });
+        };
+
+        $scope.prev = function(){
+            if( $scope.page-- <= 1 ) $scope.page = $scope.totalPages;
+            $scope.paginate();
+        };
+
+        $scope.next = function(){
+            if( $scope.page++ >=  $scope.totalPages) $scope.page = 1;
+            $scope.paginate();
+        };
+
+        $scope.words = Words.paginate($scope.page, $scope.perPage, topWords);
 }]);
 angular.module('ortho')
 .controller('WordMeaningCtrl', ["$scope", "$stateParams", "Words",
@@ -159,7 +212,10 @@ angular.module('ortho')
 		.state('tab', {
 			url: "/tab",
 			abstract: true,
-			templateUrl: "templates/tabs.html"
+			templateUrl: "templates/tabs.html",
+			controller: ["Words", function(Words){
+				//bootstrap
+			}]
 		})
 
 
@@ -189,12 +245,29 @@ angular.module('ortho')
 
 
 		// Each tab has its own nav history stack:
+		.state('tab.list', {
+			url: '/list',
+			views: {
+				'tab-list': {
+					templateUrl: 'templates/list/lists.html'
+				}
+			}
+		})
 		.state('tab.alphabets', {
 			url: '/alphabets',
 			views: {
-				'tab-alphabets': {
-					templateUrl: 'templates/alphabet/alphabets.html',
+				'tab-list': {
+					templateUrl: 'templates/list/alphabets.html',
 					controller: 'AlphabetsCtrl'
+				}
+			}
+		})
+		.state('tab.top', {
+			url: '/top/:top/:page',
+			views: {
+				'tab-words': {
+					templateUrl: 'templates/list/words.html',
+					controller: 'TopListCtrl'
 				}
 			}
 		})
@@ -203,7 +276,7 @@ angular.module('ortho')
 			url: '/alphabet/:alphabet/:page',
 			views: {
 				'tab-words': {
-					templateUrl: 'templates/alphabet/words.html',
+					templateUrl: 'templates/list/words.html',
 					controller: 'AlphabetWordsCtrl'
 				}
 			}

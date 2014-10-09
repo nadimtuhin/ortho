@@ -5,6 +5,7 @@ angular.module('ortho')
 
         $scope.page     = $stateParams.page;
         $scope.alphabet = $stateParams.alphabet;
+        $scope.title    = $stateParams.alphabet;
         $scope.perPage  = 10;
 
         alphabetWords       = Words.alphabetFilter($scope.alphabet);

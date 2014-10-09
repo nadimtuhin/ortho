@@ -1,0 +1,24 @@
+<ion-view title="{{title}} - {{page}} of {{totalPages}}" id="word-list">
+  <ion-content>
+
+    <div class="button-bar small-button-bar">
+        <a ng-hide="totalPages == 1" class="button button-small button-calm icon-left ion-chevron-left" ng-click="prev()"></a>
+        <a ng-hide="totalPages == 1" class="button button-small button-calm ion-shuffle" ng-click="next()"></a>
+        <a ng-hide="totalPages == 1" class="button button-small button-calm icon-right ion-chevron-right" ng-click="next()"></a>
+    </div>
+
+    <ion-list>
+      <ion-item ng-repeat="word in words" type="item-text-wrap" href="#/tab/meaning/{{word.id}}">
+        <strong>{{word.name}}</strong>
+        <small><em>{{word.sd}}</em></small>
+      </ion-item>
+    </ion-list>
+
+    <div class="button-bar small-button-bar">
+        <a ng-hide="totalPages == 1" class="button button-small button-calm icon-left ion-chevron-left" ng-click="prev()"></a>
+        <a ng-hide="totalPages == 1" class="button button-small button-calm ion-shuffle" ng-click="next()"></a>
+        <a ng-hide="totalPages == 1" class="button button-small button-calm icon-right ion-chevron-right" ng-click="next()"></a>
+    </div>
+
+  </ion-content>
+</ion-view>

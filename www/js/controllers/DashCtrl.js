@@ -4,7 +4,7 @@ angular.module('ortho')
     $scope.search = function(word){
         $scope.word = Words.getByName(word);
         if (!$scope.word) {
-            alert('word does not exist in the dictionary');
+            alert('word "'+ word +'" does not exist in the dictionary');
             return;
         }
 

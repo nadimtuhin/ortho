@@ -16,7 +16,10 @@ angular.module('ortho')
 		.state('tab', {
 			url: "/tab",
 			abstract: true,
-			templateUrl: "templates/tabs.html"
+			templateUrl: "templates/tabs.html",
+			controller: ["Words", function(Words){
+				//bootstrap
+			}]
 		})
 
 
@@ -46,12 +49,29 @@ angular.module('ortho')
 
 
 		// Each tab has its own nav history stack:
+		.state('tab.list', {
+			url: '/list',
+			views: {
+				'tab-list': {
+					templateUrl: 'templates/list/lists.html'
+				}
+			}
+		})
 		.state('tab.alphabets', {
 			url: '/alphabets',
 			views: {
-				'tab-alphabets': {
-					templateUrl: 'templates/alphabet/alphabets.html',
+				'tab-list': {
+					templateUrl: 'templates/list/alphabets.html',
 					controller: 'AlphabetsCtrl'
+				}
+			}
+		})
+		.state('tab.top', {
+			url: '/top/:top/:page',
+			views: {
+				'tab-words': {
+					templateUrl: 'templates/list/words.html',
+					controller: 'TopListCtrl'
 				}
 			}
 		})
@@ -60,7 +80,7 @@ angular.module('ortho')
 			url: '/alphabet/:alphabet/:page',
 			views: {
 				'tab-words': {
-					templateUrl: 'templates/alphabet/words.html',
+					templateUrl: 'templates/list/words.html',
 					controller: 'AlphabetWordsCtrl'
 				}
 			}
