@@ -10,6 +10,3 @@
 
 **Contribute:**
 help me to make this app awesome. send me pull requests
-
-**Contributors:**
-Omar Faruque Tuhin - omar8161@gmail.com
