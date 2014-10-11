@@ -2,12 +2,12 @@
   <ion-content>
 
     <div class="button-bar small-button-bar">
-        <a ng-hide="totalPages == 1" class="button button-small button-calm icon-left ion-chevron-left" ng-click="prev()"></a>
+        <a ng-hide="totalPages == 1" class="button button-small button-calm icon-left ion-chevron-left" ng-click=""></a>
         <a ng-hide="totalPages == 1" class="button button-small button-calm ion-shuffle" ng-click="random()"></a>
         <a ng-hide="totalPages == 1" class="button button-small button-calm icon-right ion-chevron-right" ng-click="next()"></a>
     </div>
 
-    <ion-list>
+    <ion-list on-swipe-left="prev()" on-swipe-right="next()">
       <ion-item ng-repeat="word in words" type="item-text-wrap" href="#/tab/meaning/{{word.id}}">
         <strong>{{word.name}}</strong>
         <small><em>{{word.sd}}</em></small>

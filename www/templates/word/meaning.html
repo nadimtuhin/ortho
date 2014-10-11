@@ -19,8 +19,8 @@
   </div>
 
   <div ng-show="word.mn[0]" class="item item-divider"> Mnemonics </div>
-  <div ng-repeat="mn in word.mn" class="item item-text-wrap">
-        <p><em style="font-size:8px">{{$index}}:</em> {{mn}}</p>
+  <div ng-repeat="mn in word.mn track by $index" class="item item-text-wrap">
+        <p><em style="font-size:10px">{{$index}}:</em> {{mn}}</p>
   </div>
 </div>
 
