@@ -1,6 +1,7 @@
 **Ortho: FirefoxOS/Android/iOS GRE Dictionary**
 
-**Start Hacking**
+Start Hacking
+=============
 
 **pre-requites**
 - nodejs
@@ -8,7 +9,7 @@
 - npm install -g ionic
 - npm install -g gulp
 
-**after you are setup not build**
+**after you are setup lets build**
 - npm install
 - bower install
 - ionic serve
