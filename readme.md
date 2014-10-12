@@ -1,7 +1,7 @@
 ## Ortho: FirefoxOS/Android/iOS GRE Dictionary
 
 
-### Start Hacking
+### Start Hacking (*nix workflow)
 
 ##### pre-requites (if you dont have them)
 ```sh
