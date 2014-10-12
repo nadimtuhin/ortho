@@ -2,7 +2,6 @@
 
 Start Hacking
 =============
-
 **pre-requites**
 - nodejs
 - npm install -g ionic
@@ -16,12 +15,14 @@ Start Hacking
 - gulp
 
 
-**Intended features:**
+Intended features:
+==================
 - word games
 - add pictures to words
 - comment the codebase
 - flash cards
 
-**Contribute:**
+Contribute:
+===========
 
 help me to make this app awesome. send me pull requests
