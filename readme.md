@@ -2,17 +2,20 @@
 
 ### Start Hacking
 
-##### pre-requites
-- nodejs
-- npm install -g ionic
-- npm install -g bower
-- npm install -g gulp
-
+##### pre-requites (if you dont have them)
+```sh
+sudo apt-get install nodejs
+sudo npm install -g ionic
+sudo npm install -g bower
+sudo npm install -g gulp
+```
 ##### after you are setup lets build
-- npm install
-- bower install
-- ionic serve
-- gulp
+```sh
+npm install
+bower install
+ionic serve
+gulp
+```
 
 
 ### Intended features:
