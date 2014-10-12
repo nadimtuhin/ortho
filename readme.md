@@ -6,7 +6,7 @@ Start Hacking
 **pre-requites**
 - nodejs
 - npm install -g ionic
-- npm install -g ionic
+- npm install -g bower
 - npm install -g gulp
 
 **after you are setup lets build**
