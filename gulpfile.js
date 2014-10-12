@@ -2,21 +2,46 @@ var gulp = require('gulp');
 var gutil = require('gulp-util');
 var bower = require('bower');
 var concat = require('gulp-concat');
+var uglify = require('gulp-uglify');
 var sass = require('gulp-sass');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var sh = require('shelljs');
 var mainBowerFiles = require('main-bower-files');
 
+
+var fileFilter = {
+  css : function(file){
+    return fileFilter.getFileExtension(file) === 'css';
+  },
+  js : function(file){
+    return fileFilter.getFileExtension(file) === 'js';
+  },
+  font : function(file){
+    return ['eot', 'svg', 'ttf', 'woff'].indexOf(fileFilter.getFileExtension(file)) === -1 ? 0 : 1 ;
+  },
+  getFileExtension: function(file){
+    var dot = file.lastIndexOf('.');
+    return file.slice(dot+1, file.length);
+  }
+};
+
+var bowerFiles = {
+  'css' : mainBowerFiles({paths:{bowerDirectory: './lib'}, filter: fileFilter.css }),
+  'js' : mainBowerFiles({paths:{bowerDirectory: './lib'}, filter: fileFilter.js }),
+  'font' : mainBowerFiles({paths:{bowerDirectory: './lib'}, filter: fileFilter.font })
+};
+
 gulp.task('bower', function() {
-    return gulp.src(mainBowerFiles({paths:{bowerDirectory: './www/lib'}}))
-        .pipe(concat('vendors.js'))
-        .pipe(gulp.dest('./www/js'));
+    gulp.src(bowerFiles.css).pipe(concat('vendors.css')).pipe(minifyCss()).pipe(gulp.dest('./www/css'));
+    gulp.src(bowerFiles.js).pipe(concat('vendors.js')).pipe(uglify()).pipe(gulp.dest('./www/js'));
+    gulp.src(bowerFiles.font).pipe(gulp.dest('./www/fonts'));
 });
 
 gulp.task('js', function() {
     return gulp.src([
           // './www/js/data/db.js',
+          // './www/js/vendors.js',
           './www/js/functions.js',
           './www/js/app.js',
           './www/js/services/*.js',
@@ -24,7 +49,7 @@ gulp.task('js', function() {
           './www/js/routes.js',
         ])
         .pipe(concat('script.js'))
-        .pipe(gulp.dest('./www/build'));
+        .pipe(gulp.dest('./www/js'));
 });
 
 var paths = {
@@ -32,7 +57,7 @@ var paths = {
   js: ['./www/js/**/*.js']
 };
 
-gulp.task('default', ['sass', 'js']);
+gulp.task('default', ['bower', 'js', 'watch']);
 
 gulp.task('sass', function(done) {
   gulp.src('./scss/ionic.app.scss')
@@ -47,7 +72,7 @@ gulp.task('sass', function(done) {
 });
 
 gulp.task('watch', function() {
-  gulp.watch(paths.sass, ['sass']);
+  // gulp.watch(paths.sass, ['sass']);
   gulp.watch(paths.js, ['js']);
 });
 

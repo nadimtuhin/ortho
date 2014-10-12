@@ -2,15 +2,10 @@
   "name": "ortho",
   "private": "true",
   "devDependencies": {
-    "ionic": "driftyco/ionic-bower#1.0.0-beta.13"
-  },
-  "overrides": {
-    "BOWER-PACKAGE": {
-      "main": "**/*.js"
-    }
+    "ionic": "driftyco/ionic-bower#master"
   },
   "dependencies": {
     "lodash": "~2.4.1",
-    "ionic": "*"
+    "ionic": "driftyco/ionic-bower#master"
   }
 }
