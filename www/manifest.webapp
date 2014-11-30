@@ -1,13 +1,20 @@
 {
-  "name": "Ortho",
-  "description": "A mnemonics dictionary app",
-  "launch_path": "/index.html",
-  "icons": {
-    "16": "/icons/icon16x16.png",
-    "48": "/icons/icon48x48.png",
-    "60": "/icons/icon60x60.png",
-    "128": "/icons/icon128x128.png"
-  },
-  "type": "privileged",
-  "permissions": {}
+    "name": "Ortho GRE Dictionary",
+    "description": "A GRE mnemonics dictionary app. It runs offline. I plan on adding Bangla meaning and word games soon.",
+    "launch_path": "/index.html",
+    "icons": {
+        "16": "/icons/icon-16.png",
+        "48": "/icons/icon-48.png",
+        "60": "/icons/icon-60.png",
+        "128": "/icons/icon-128.png"
+    },
+    "permissions": {},
+    "installs_allowed_from": [
+        "*"
+    ],
+    "version": "0.0.3",
+    "developer": {
+        "name": "Nadim Tuhin",
+        "url": "http://nadimtuhin.com/"
+    }
 }

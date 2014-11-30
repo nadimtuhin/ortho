@@ -9,7 +9,20 @@ function getSrv(name) {
 // 'ortho.services' is found in services.js
 // 'ortho.controllers' is found in controllers.js
 angular.module('ortho', ['ionic'])
+.directive('keyboardHandler', function ($window) {
+    return {
+        restrict: 'A',
+        link: function postLink(scope, element, attrs) {
+            angular.element($window).bind('native.keyboardshow', function() {
+                element.addClass('tabs-item-hide');
+            });
 
+            angular.element($window).bind('native.keyboardhide', function() {
+                element.removeClass('tabs-item-hide');
+            });
+        }
+    };
+})
 .run(["$ionicPlatform", function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -146,14 +159,41 @@ angular.module('ortho')
 angular.module('ortho')
 .controller('DashCtrl', ["$scope", "Words", "$timeout", "$state",
     function($scope, Words, $timeout, $state) {
-    $scope.search = function(word){
+	$scope.suggestions = [];
+
+	$scope.go = function(word){
         $scope.word = Words.getByName(word);
-        if (!$scope.word) {
-            alert('word "'+ word +'" does not exist in the dictionary');
-            return;
-        }
+        if (!$scope.word)return;
 
         $state.go('tab.dash-meaning', {wordId: $scope.word.id});
+	};
+    
+    $scope.search = function(search){
+    	if(!search){
+			$scope.suggestions = [];
+			return;
+    	}
+        $scope.suggestions = getSuggestions(search).splice(0,20);
+    };
+
+    var getWordMatches = function(search){
+    	return _.filter(Words.all(), function(word){
+		   return -1!==word.name.indexOf(search);
+		});
+    };
+
+    var getSuggestions = function(search){
+    	var suggestions = getWordMatches(search);
+
+    	var start = _.filter(suggestions, function(word){
+    		return 0 === word.name.indexOf(search);
+    	});
+
+    	var middle = _.filter(suggestions, function(word){
+    		return 0 !== word.name.indexOf(search);
+    	});
+
+    	return start.concat(middle);
     };
 }]);
 angular.module('ortho')

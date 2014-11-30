@@ -6,7 +6,20 @@
 // 'ortho.services' is found in services.js
 // 'ortho.controllers' is found in controllers.js
 angular.module('ortho', ['ionic'])
+.directive('keyboardHandler', function ($window) {
+    return {
+        restrict: 'A',
+        link: function postLink(scope, element, attrs) {
+            angular.element($window).bind('native.keyboardshow', function() {
+                element.addClass('tabs-item-hide');
+            });
 
+            angular.element($window).bind('native.keyboardhide', function() {
+                element.removeClass('tabs-item-hide');
+            });
+        }
+    };
+})
 .run(["$ionicPlatform", function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard

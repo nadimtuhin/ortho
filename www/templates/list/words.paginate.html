@@ -1,4 +1,5 @@
-
-<a ng-hide="totalPages == 1" class="button button-small button-calm icon-left ion-chevron-left" ng-click="prev()"></a>
-<a ng-hide="totalPages == 1" class="button button-small button-calm ion-shuffle" ng-click="next()"></a>
-<a ng-hide="totalPages == 1" class="button button-small button-calm icon-right ion-chevron-right" ng-click="next()"></a>
+<div class="button-bar small-button-bar">
+    <a ng-hide="totalPages == 1" class="button button-small button-calm icon-left ion-chevron-left" ng-click="prev()"></a>
+    <a ng-hide="totalPages == 1" class="button button-small button-calm ion-shuffle" ng-click="random()"></a>
+    <a ng-hide="totalPages == 1" class="button button-small button-calm icon-right ion-chevron-right" ng-click="next()"></a>
+</div>

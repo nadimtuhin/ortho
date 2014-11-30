@@ -1,15 +1,29 @@
-<ion-view title="Ortho">
+<ion-view title="Search">
   <ion-content class="padding">
-    <form action=""  ng-submit="search(s)">
-        <div class="bar bar-header item-input-inset">
+    <form style="margin-bottom:10px" ng-submit="go(s)">
+<!--         <div class="bar bar-header item-input-inset">
           <label class="item-input-wrapper">
             <i class="icon ion-ios7-search placeholder-icon"></i>
-            <input type="search" placeholder="Search" ng-model="s">
           </label>
-          <button class="button button-positive icon-left">
-             <i class="icon ion-ios7-search"></i> Search
-          </button>
+        </div> -->
+        <div class="list list-inset">
+          <label class="item item-input">
+            <i class="icon ion-search placeholder-icon"></i>
+            <input type="search" id="search" placeholder="Search" ng-model="s" ng-change="search(s)">
+          </label>
         </div>
     </form>
+
+
+    <ion-list>
+      <ion-item ng-repeat="suggestion in suggestions" type="item-text-wrap" 
+        href="#/tab/dash/meaning/{{suggestion.id}}">
+        <strong>{{suggestion.name}}</strong>
+        <small><em>{{suggestion.sd}}</em></small>
+      </ion-item>
+    </ion-list>
+
+
+  </ion-content>
   </ion-content>
 </ion-view>
