@@ -13,8 +13,16 @@
         "*"
     ],
     "version": "0.0.3",
-    "developer": {
+    "developer": [
+        {
         "name": "Nadim Tuhin",
         "url": "http://nadimtuhin.com/"
+        },
+        
+        {
+        "name": "Atique Ahmed Ziad",
+        "url": "http://nadimtuhin.com/"                
     }
+        ]
+                
 }
