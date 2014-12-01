@@ -1,6 +1,6 @@
 {
     "name": "Fox Dictionary",
-    "description": "",
+    "description": "Fox Dictionary is the largest dictionary for Firefox OS. It contains over 100,000 words meaning. We have also included GRE words and mnemonics. App Features: *Word Meanings *Word Synonymes and Antonyms *Word games ",
     "launch_path": "/index.html",
     "icons": {
         "16": "/icons/icon-16.png",
