@@ -15,14 +15,14 @@
     "version": "0.0.3",
     "developer": [
         {
-        "name": "Nadim Tuhin",
-        "url": "http://nadimtuhin.com/"
+            "name": "Nadim Tuhin",
+            "url": "http://nadimtuhin.com/"
         },
         
         {
-        "name": "Atique Ahmed Ziad",
-        "url": "http://www.exteem.net"                
-    }
-        ]
+            "name": "Atique Ahmed Ziad",
+            "url": "http://www.exteem.net"                
+        }
+    ]
                 
 }
