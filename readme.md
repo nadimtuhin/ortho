@@ -1,4 +1,4 @@
-## Ortho: FirefoxOS/Android/iOS GRE Dictionary
+## Fox Dictionary: FirefoxOS/Android/iOS GRE Dictionary
 
 
 ### Start Hacking (*nix workflow)
