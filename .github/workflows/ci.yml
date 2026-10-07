@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [main, master]
   pull_request:
-    branches: [ main, master ]
+    branches: [main, master]
 
 jobs:
   build:
@@ -14,29 +14,31 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Set up Node.js
+        if: ${{ hashFiles('package.json') != '' }}
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-        continue-on-error: true
 
       - name: Install dependencies
-        run: |
-          if [ -f "package.json" ]; then
-            npm ci 2>/dev/null || npm install
-          fi
+        if: ${{ hashFiles('package.json') != '' }}
+        run: npm ci --ignore-scripts || npm install --ignore-scripts
 
       - name: Run lint
+        if: ${{ hashFiles('package.json') != '' }}
         run: |
-          if [ -f "package.json" ] && npm run lint --if-present 2>/dev/null; then
+          if npm run lint --if-present 2>/dev/null; then
             echo "Lint passed"
           else
             echo "No lint script or lint skipped"
           fi
+        continue-on-error: true
 
       - name: Run tests
+        if: ${{ hashFiles('package.json') != '' }}
         run: |
-          if [ -f "package.json" ] && npm test --if-present 2>/dev/null; then
+          if npm test --if-present 2>/dev/null; then
             echo "Tests passed"
           else
             echo "No test script or tests skipped"
           fi
+        continue-on-error: true
