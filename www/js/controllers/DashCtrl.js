@@ -15,6 +15,7 @@ angular.module('ortho')
 			$scope.suggestions = [];
 			return;
     	}
+        search = angular.lowercase(search);
         $scope.suggestions = getSuggestions(search).splice(0,20);
     };
 

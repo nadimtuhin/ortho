@@ -1,6 +1,6 @@
 angular.module('ortho')
 .factory('Words', ["$$models",	function($$models) {
-	var	id=0, topWords = {};
+	var	id=0, topWords = {}, words = [];
 	var topSanitizer = function(data){
 		return _.chain(data).map(function(word){
 			return angular.lowercase(word);

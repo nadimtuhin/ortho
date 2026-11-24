@@ -6,5 +6,7 @@ angular.module('ortho')
 		}, 0);
 
         $scope.word = Words.get($stateParams.wordId);
-        $scope.word.mn = _.uniq($scope.word.mn);
+        if ($scope.word) {
+            $scope.word.mn = _.uniq($scope.word.mn);
+        }
 }]);

@@ -61,7 +61,7 @@ angular.module('ortho')
 }]);
 angular.module('ortho')
 .factory('Words', ["$$models",	function($$models) {
-	var	id=0, topWords = {};
+	var	id=0, topWords = {}, words = [];
 	var topSanitizer = function(data){
 		return _.chain(data).map(function(word){
 			return angular.lowercase(word);
@@ -173,6 +173,7 @@ angular.module('ortho')
 			$scope.suggestions = [];
 			return;
     	}
+        search = angular.lowercase(search);
         $scope.suggestions = getSuggestions(search).splice(0,20);
     };
 
@@ -247,7 +248,9 @@ angular.module('ortho')
 		}, 0);
 
         $scope.word = Words.get($stateParams.wordId);
-        $scope.word.mn = _.uniq($scope.word.mn);
+        if ($scope.word) {
+            $scope.word.mn = _.uniq($scope.word.mn);
+        }
 }]);
 angular.module('ortho')
 .config(["$stateProvider", "$urlRouterProvider", "$compileProvider",
