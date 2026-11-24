@@ -47,7 +47,7 @@ function addPlatformBodyTag(indexPath, platform) {
 
     process.stdout.write('add to body class: ' + platformClass + '\n');
   } catch(e) {
-    process.stdout.write(e);
+    process.stdout.write(String(e) + '\n');
   }
 }
 
@@ -87,7 +87,7 @@ if (rootdir) {
       }
 
     } catch(e) {
-      process.stdout.write(e);
+      process.stdout.write(String(e) + '\n');
     }
   }
 
