@@ -15,7 +15,8 @@ angular.module('ortho')
 			$scope.suggestions = [];
 			return;
     	}
-        $scope.suggestions = getSuggestions(angular.lowercase(search)).splice(0,20);
+        search = angular.lowercase(search);
+        $scope.suggestions = getSuggestions(search).splice(0,20);
     };
 
     var getWordMatches = function(search){

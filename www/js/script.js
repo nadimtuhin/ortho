@@ -173,7 +173,8 @@ angular.module('ortho')
 			$scope.suggestions = [];
 			return;
     	}
-        $scope.suggestions = getSuggestions(angular.lowercase(search)).splice(0,20);
+        search = angular.lowercase(search);
+        $scope.suggestions = getSuggestions(search).splice(0,20);
     };
 
     var getWordMatches = function(search){
@@ -247,7 +248,9 @@ angular.module('ortho')
 		}, 0);
 
         $scope.word = Words.get($stateParams.wordId);
-        if ($scope.word) $scope.word.mn = _.uniq($scope.word.mn);
+        if ($scope.word) {
+            $scope.word.mn = _.uniq($scope.word.mn);
+        }
 }]);
 angular.module('ortho')
 .config(["$stateProvider", "$urlRouterProvider", "$compileProvider",
