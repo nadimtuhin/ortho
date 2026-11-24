@@ -1,9 +1,11 @@
+/* jshint node: true */
 'use strict';
 var test = require('node:test');
 var assert = require('node:assert');
 var harness = require('./harness');
 
-var DB = [{ "abase": { "sd": "lower", "mn": ["m1", "m1", "m2"] }, "abate": { "sd": "subside" }, "babble": { "sd": "talk" } }];
+var DB = harness.DB;
+var names = harness.names;
 
 function loadedWords(app) {
   var fake = harness.fakeModels();
@@ -13,7 +15,9 @@ function loadedWords(app) {
 }
 
 function meaningCtrl(wordId) {
-  var app = harness.load(['services/Words.js', 'controllers/WordMeaningCtrl.js']);
+  var app = harness.load([
+    'services/Words.js', 'controllers/WordMeaningCtrl.js'
+  ]);
   var scope = {};
   app.invoke('WordMeaningCtrl', {
     $scope: scope,
@@ -52,16 +56,18 @@ function dashCtrl() {
 }
 
 test('DashCtrl search is case-insensitive', function () {
-  // Mobile keyboards capitalise the first letter; dictionary keys are lower case.
+  // Mobile keyboards capitalise the first letter;
+  // dictionary keys are lower case.
   var scope = dashCtrl();
   scope.search('Aba');
-  assert.deepStrictEqual(scope.suggestions.map(function (w) { return w.name; }), ['abase', 'abate']);
+  assert.deepStrictEqual(names(scope.suggestions), ['abase', 'abate']);
   scope.search('BAB');
-  assert.deepStrictEqual(scope.suggestions.map(function (w) { return w.name; }), ['babble']);
+  assert.deepStrictEqual(names(scope.suggestions), ['babble']);
 });
 
 test('DashCtrl search lists prefix matches before inner matches', function () {
   var scope = dashCtrl();
   scope.search('ab');
-  assert.deepStrictEqual(scope.suggestions.map(function (w) { return w.name; }), ['abase', 'abate', 'babble']);
+  assert.deepStrictEqual(names(scope.suggestions),
+    ['abase', 'abate', 'babble']);
 });

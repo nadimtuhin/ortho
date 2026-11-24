@@ -1,9 +1,11 @@
+/* jshint node: true */
 'use strict';
 var test = require('node:test');
 var assert = require('node:assert');
 var harness = require('./harness');
 
-var DB = [{ "abase": { "sd": "lower", "mn": ["m1", "m1", "m2"] }, "abate": { "sd": "subside" }, "babble": { "sd": "talk" } }];
+var DB = harness.DB;
+var names = harness.names;
 
 function setup() {
   var app = harness.load(['services/Words.js']);
@@ -12,7 +14,8 @@ function setup() {
   return { app: app, fake: fake, Words: Words };
 }
 
-test('alphabetFilter and top do not throw before the dictionary has loaded', function () {
+test('alphabetFilter and top do not throw before the dictionary loads',
+function () {
   // Opening a deep link such as #/tab/alphabet/A/1 runs the controller
   // before db.json has arrived.
   var s = setup();
@@ -33,8 +36,9 @@ test('lookups work once the dictionary has loaded', function () {
   var s = setup();
   s.fake.resolveWords(DB);
   s.fake.resolveTop(50, ['Abate']);
-  assert.deepStrictEqual(s.Words.alphabetFilter('A').map(function (w) { return w.name; }), ['abase', 'abate']);
-  assert.deepStrictEqual(s.Words.top(50).map(function (w) { return w.name; }), ['abate']);
+  assert.deepStrictEqual(names(s.Words.alphabetFilter('A')),
+    ['abase', 'abate']);
+  assert.deepStrictEqual(names(s.Words.top(50)), ['abate']);
   assert.strictEqual(s.Words.getByName('Babble').sd, 'talk');
   assert.strictEqual(s.Words.get('0').name, 'abase');
 });

@@ -1,3 +1,4 @@
+/* jshint node: true */
 'use strict';
 // Minimal AngularJS stand-in: loads the app's source files in a VM context and
 // captures what they register, so services and controllers can be unit tested
@@ -11,9 +12,12 @@ var SRC = path.join(__dirname, '..', 'www', 'js');
 function load(files) {
   var registry = {};
   var mod = {};
-  ['factory', 'controller', 'directive', 'run', 'config'].forEach(function (kind) {
+  var kinds = ['factory', 'controller', 'directive', 'run', 'config'];
+  kinds.forEach(function (kind) {
     mod[kind] = function (name, def) {
-      if (typeof name === 'string') registry[name] = def;
+      if (typeof name === 'string') {
+        registry[name] = def;
+      }
       return mod;
     };
   });
@@ -21,7 +25,9 @@ function load(files) {
     _: require('lodash'),
     angular: {
       module: function () { return mod; },
-      lowercase: function (s) { return typeof s === 'string' ? s.toLowerCase() : s; }
+      lowercase: function (s) {
+        return typeof s === 'string' ? s.toLowerCase() : s;
+      }
     },
     console: console
   });
@@ -36,7 +42,9 @@ function load(files) {
       var def = registry[name];
       var deps = def.slice(0, -1);
       return def[def.length - 1].apply(null, deps.map(function (d) {
-        if (!(d in locals)) throw new Error('missing dependency ' + d + ' for ' + name);
+        if (!(d in locals)) {
+          throw new Error('missing dependency ' + d + ' for ' + name);
+        }
         return locals[d];
       }));
     }
@@ -67,4 +75,20 @@ function fakeModels() {
   };
 }
 
-module.exports = { load: load, fakeModels: fakeModels };
+// A tiny dictionary in the same shape as www/js/data/db.json.
+var DB = [{
+  abase: { sd: 'lower', mn: ['m1', 'm1', 'm2'] },
+  abate: { sd: 'subside' },
+  babble: { sd: 'talk' }
+}];
+
+function names(words) {
+  return words.map(function (w) { return w.name; });
+}
+
+module.exports = {
+  load: load,
+  fakeModels: fakeModels,
+  DB: DB,
+  names: names
+};
